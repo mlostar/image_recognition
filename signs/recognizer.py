@@ -6,29 +6,39 @@ cap  = cv2.VideoCapture(0)
 fontscale = 0.8
 color = (255, 0, 0)
 fontface = cv2.FONT_HERSHEY_PLAIN
+cap.set(cv2.cv.CV_CAP_PROP_FPS,24)
+cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,180)
+cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT,180)
+ret ,img = cap.read()
 while True:
+    #response = "No detection"
     ret ,img = cap.read()
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     sign_right = cascade_right.detectMultiScale(gray)
     sign_left =  cascade_left.detectMultiScale(gray)
     sign_stop = cascade_stop.detectMultiScale(gray)
     for (x,y,w,h) in sign_stop:
-        cv2.rectangle(img, (x,y), (x+w,y+h),(0,255,0),2)
-        roi_gray = gray[y:y+h,x:x+w]
-        roi_color = img[y:y+h,x:x+w]
+        #response  = "stop"
+        cv2.circle(img, (x+w/2,y+h/2), (w+h)/4,(0,255,0),2)
+        #roi_gray = gray[y:y+h,x:x+w]
+        #roi_color = img[y:y+h,x:x+w]
         cv2.putText(img,'stop', (x, y), fontface, fontscale, color)
     for (x, y, w, h) in sign_left:
-        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        roi_gray = gray[y:y + h, x:x + w]
-        roi_color = img[y:y + h, x:x + w]
+        #response = "sign_left"
+        cv2.circle(img, (x+w/2,y+h/2), (w+h)/4, (0, 255, 0), 2)
+        #roi_gray = gray[y:y + h, x:x + w]
+        #roi_color = img[y:y + h, x:x + w]
         cv2.putText(img,'left_turn', (x, y), fontface, fontscale, color)
     for (x, y, w, h) in sign_right:
-        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        roi_gray = gray[y:y + h, x:x + w]
-        roi_color = img[y:y + h, x:x + w]
+        #response = "sign_right"
+        cv2.circle(img, (x+w/2,y+h/2), (w+h)/4, (0, 255, 0), 2)
+        #roi_gray = gray[y:y + h, x:x + w]
+        #roi_color = img[y:y + h, x:x + w]
         cv2.putText(img,'right_turn', (x, y), fontface, fontscale, color)
-
+    #if response is not "No detection":
+     #   print(response)    
     cv2.imshow('img',img)
+    
     k = cv2.waitKey(30) &0xff
     if k ==27:
         break
