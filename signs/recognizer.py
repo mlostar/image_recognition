@@ -7,13 +7,12 @@ cap  = cv2.VideoCapture(0)
 fontscale = 0.8
 color = (255, 0, 0)
 fontface = cv2.FONT_HERSHEY_PLAIN
-cap.set(cv2.cv.CV_CAP_PROP_FPS,24)
-cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,180)
-cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT,180)
+cap.set(cv2.CAP_PROP_FPS,24)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH,180)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT,180)
 ret ,img = cap.read()
-imgarr=[]
 start_time=time.time()
-while time.time()-start_time<10:
+while time.time()-start_time<5:
     #response = "No detection"
     ret ,img = cap.read()
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -40,14 +39,9 @@ while time.time()-start_time<10:
         cv2.putText(img,'right_turn', (x, y), fontface, fontscale, color)
     #if response is not "No detection":
      #   print(response)    
-    #cv2.imshow('img',img)
-    imgarr.append(img)
+    cv2.imshow('img',img)
     k = cv2.waitKey(30) &0xff
     if k ==27:
         break
-out = cv2.VideoWriter('project.avi',cv2.cv.CV_FOURCC('M','J','P','G'), 24, (180,180))
-for im in imgarr:
-    out.write(im)
-out.release()
 cap.release()
 cv2.destroyAllWindows()
