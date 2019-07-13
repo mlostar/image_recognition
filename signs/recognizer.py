@@ -38,7 +38,7 @@ while time.time()-start_time<5:
         #roi_color = img[y:y + h, x:x + w]
         cv2.putText(img,'right_turn', (x, y), fontface, fontscale, color)
     #if response is not "No detection":
-     #   print(response)    
+     #   print(response)
     cv2.imshow('img',img)
     k = cv2.waitKey(30) &0xff
     if k ==27:
