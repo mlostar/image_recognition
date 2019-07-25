@@ -25,6 +25,11 @@ def send_hex_d6_LOW():
 
 #initialize serial port
 serial0 = serial.Serial(
+"""
+initializes  serial port
+takes no argument
+returns nothing
+"""
      port='/dev/serial0',
      baudrate = 9600,
      parity=serial.PARITY_NONE,
