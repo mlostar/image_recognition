@@ -5,6 +5,7 @@ import time
 #this is for my pc compatability
 matplotlib.use("tkagg")
 import matplotlib.pyplot as plt
+#set image transform parameters and source paths
 MAX_BLUR_LEVEL=3
 BLR_COEFFICENT=3
 MAX_BRIGHTNESS_LEVEL=5
@@ -13,13 +14,18 @@ MAX_SAMPLE=250
 path=input("output directory:")
 video_path=input("input video:")
 cap= cv2.VideoCapture('./'+video_path)
+#How many frames will be jumoed after a succesfull process
 JUMP=10
+#parameters for image
 WIDTH=25
 HEIGHT=50
 i=0
+# how many pixels will be added to capture object completely
 FRAME_EXTEND=50
-general_cascade=cv2.CascadeClassifier("../signs/outgray/cascade.xml")
 def increase_brightness(img, value=30):
+    """ increases brightness of a given image
+    takes 2 arguments source image as cv2 image object and brightness level
+    returns new image"""
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     h, s, v = cv2.split(hsv)
     lim = 255 - value
@@ -29,6 +35,9 @@ def increase_brightness(img, value=30):
     img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
     return img
 def decrease_brightnes(img,value):
+    """ decreases brightness of a given image
+    takes 2 arguments source image in cv2 image fomat and brightness level
+    returns new image"""
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     h, s, v = cv2.split(hsv)
     v[v > value ] -= value
@@ -37,6 +46,12 @@ def decrease_brightnes(img,value):
     img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
     return img
 def circe_finder(img):
+    """
+        finds circles in a given image
+        takes 1 argument- source image in cv2 image format
+        returns upper left and lover right corners and width of region of interest
+        if no circle returns all 0
+    """
     img = img.astype('uint8')
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     gray=cv2.medianBlur(gray,9)
@@ -54,6 +69,11 @@ def circe_finder(img):
     #roi=[0,0,0,0]
     return roi
 def data_create():
+    """
+        opens a video from source and captures frames that includes circles
+        crops region of interests writes its transformed verisons in to given path
+        takes no argument returns nothing 
+    """
     j =0
     global MAX_BLUR_LEVEL,MAX_BLUR_LEVEL,JUMP,i,FRAME_EXTEND,MAX_SAMPLE,WIDTH,HEIGHT,BLR_COEFFICENT,BRR_COEFFICENT
     while(cap.isOpened()):
