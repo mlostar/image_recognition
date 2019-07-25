@@ -1,5 +1,17 @@
+"""
+
+    This script opens the camera and by using trained cascades, it encircles the sign and gives its meaning
+
+    Useful Resources
+    ----------------
+    https://medium.com/@rithikachowta/object-detection-lbp-cascade-classifier-generation-a1d1a1c2d0b
+    https://buildmedia.readthedocs.org/media/pdf/opencv-python/latest/opencv-python.pdf
+
+"""
+
 import cv2
 import time
+
 cascade_right = cv2.CascadeClassifier('data/cascade.xml')
 cascade_left = cv2.CascadeClassifier('data_left/cascade.xml')
 cascade_stop = cv2.CascadeClassifier('data_stop/cascade.xml')
@@ -12,6 +24,7 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH,640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT,360)
 ret ,img = cap.read()
 start_time=time.time()
+
 while time.time():
     #response = "No detection"
     ret ,img = cap.read()
