@@ -18,7 +18,7 @@ def _Pi_Serial_Catch():
         print(current_byte)
         if(current_step==len(TRAFFIC_SIGN_BYTES)):
             sign_result=which_sign(current_byte[0])
-            message = b'\xAA\x44\x1C\x12\x01'+sign_result
+            message = b'\xAA\x44\x1C\x13\x01'+sign_result
             serial0.write(message)
             #print(message)
             current_step=0
